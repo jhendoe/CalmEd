@@ -1,0 +1,25 @@
+{
+  "name": "calmed",
+  "version": "1.0.0",
+  "description": "CalmEd is a student-focused wellness application designed to help students manage academic stress and maintain better mental well-being.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhendoe/CalmEd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jhendoe/CalmEd/issues"
+  },
+  "homepage": "https://github.com/jhendoe/CalmEd#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}
