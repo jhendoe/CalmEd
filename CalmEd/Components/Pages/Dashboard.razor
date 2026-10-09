@@ -1,0 +1,141 @@
+
+@page "/dashboard"
+@using CalmEd.Services
+@inject AuthState Auth
+@inject NavigationManager Nav
+
+<PageTitle>CalmEd | Dashboard</PageTitle>
+
+<div class="min-h-screen bg-[#f4f6ee]">
+    <header class="flex items-center justify-between bg-white px-6 py-4 shadow-sm">
+        <h1 class="text-2xl font-bold text-[#334b3f]">🌿 CalmEd</h1>
+        <button @onclick="Logout"
+            class="rounded-xl border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100">
+            Logout
+        </button>
+    </header>
+
+    <main class="mx-auto max-w-5xl px-5 py-10">
+        <section class="rounded-3xl bg-[#dfe9d8] p-8 md:p-10">
+            <p class="text-sm font-medium text-[#58735c]">
+                YOUR PERSONAL WELLNESS SPACE
+            </p>
+
+            <h2 class="mt-3 text-3xl font-bold text-[#334b3f]">
+                Hello, @Auth.CurrentUser?.Username! 🌱
+            </h2>
+
+            <p class="mt-3 max-w-xl text-gray-600">
+                School can get overwhelming. Take a moment for yourself.
+                Your well-being matters, too.
+            </p>
+        </section>
+
+        <section class="mt-10">
+            <h3 class="text-xl font-bold text-[#334b3f]">
+                How are you feeling today?
+            </h3>
+
+            <p class="mt-2 text-gray-500">
+                Choose the option that best describes how you feel.
+            </p>
+
+            <div class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                @foreach (var mood in moods)
+                {
+                    <button @onclick="() => SelectMood(mood.Name)"
+                        class="rounded-2xl border bg-white p-5 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-md @(selectedMood == mood.Name ? "border-[#6f8b72] ring-2 ring-[#6f8b72]" : "border-gray-200")">
+                        <span class="text-3xl">@mood.Emoji</span>
+                        <p class="mt-3 font-semibold text-[#334b3f]">
+                            @mood.Name
+                        </p>
+                        <p class="mt-1 text-sm text-gray-500">
+                            @mood.Description
+                        </p>
+                    </button>
+                }
+            </div>
+
+            @if (!string.IsNullOrEmpty(selectedMood))
+            {
+                <div class="mt-4 rounded-xl bg-white p-4 text-[#334b3f]">
+                    <p class="font-medium">
+                        Check-in saved for this session: @selectedMood
+                    </p>
+                    <p class="mt-1 text-sm text-gray-500">
+                        Remember, it's okay to take things one step at a time.
+                    </p>
+                </div>
+            }
+        </section>
+
+        <section class="mt-10">
+            <h3 class="text-xl font-bold text-[#334b3f]">
+                Small ways to reset
+            </h3>
+
+            <p class="mt-2 text-gray-500">
+                Try one of these simple activities during your day.
+            </p>
+
+            <div class="mt-5 grid grid-cols-1 gap-4 md:grid-cols-3">
+                @foreach (var activity in activities)
+                {
+                    <article class="rounded-2xl bg-white p-6 shadow-sm">
+                        <span class="text-3xl">@activity.Emoji</span>
+                        <h4 class="mt-4 font-semibold text-[#334b3f]">
+                            @activity.Title
+                        </h4>
+                        <p class="mt-2 text-sm leading-6 text-gray-500">
+                            @activity.Description
+                        </p>
+                    </article>
+                }
+            </div>
+        </section>
+
+        <footer class="py-10 text-center text-sm text-gray-500">
+            Pause the stress. Continue the progress. 💚
+        </footer>
+    </main>
+</div>
+
+@code {
+    private string selectedMood = "";
+
+    private readonly (string Emoji, string Name, string Description)[] moods =
+    {
+        ("😌", "Calm", "I'm feeling relaxed."),
+        ("😐", "Okay", "I'm managing my day."),
+        ("😣", "Stressed", "I could use a break.")
+    };
+
+    private readonly (string Emoji, string Title, string Description)[] activities =
+    {
+        ("🌬️", "Deep Breathing",
+            "Take a few slow, comfortable breaths."),
+        ("🧘", "Mindful Break",
+            "Step away from your screen for a moment."),
+        ("📝", "Quick Reflection",
+            "Write down one thing on your mind.")
+    };
+
+    protected override void OnInitialized()
+    {
+        if (Auth.CurrentUser is null)
+        {
+            Nav.NavigateTo("/login");
+        }
+    }
+
+    private void SelectMood(string mood)
+    {
+        selectedMood = mood;
+    }
+
+    private void Logout()
+    {
+        Auth.Logout();
+        Nav.NavigateTo("/login");
+    }
+}
