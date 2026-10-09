@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "ajYZkVtd0H0=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Dell\\Documents\\Jhen_School\\3rd yr\\AppDev\\CalmEd\\CalmEd\\CalmEd.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.12\\microsoft.aspnetcore.app.internal.assets.10.0.12.nupkg.sha512"
+  ],
+  "logs": []
+}
